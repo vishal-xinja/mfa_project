@@ -1,0 +1,664 @@
+{% extends 'base/master.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Selecao Bootstrap Template - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Selecao
+  * Template URL: https://bootstrapmade.com/selecao-bootstrap-template/
+  * Updated: Mar 17 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center  header-transparent ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="index.html">MFA Platform</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li class="dropdown">
+            <a href="#">
+              <span>Account</span>
+              <i class="bi bi-chevron-down"></i>
+            </a>
+            <ul>
+
+              {% if user.is_authenticated %}
+              <li><a href="{%url 'emp_logout' %}">Logout</a></li>
+              <li><a href="{% url 'mdashboard' %}"><Strong>DASHBOARD</Strong></a></li>
+              {% else %}
+              <li><a href="{% url 'emp_login' %}">Login</a></li>
+              <li><a href="{% url 'emp_register' %}">Register</a></li>
+              <li><a href="{% url 'man_login' %}">Manager Register</a></li>
+              {% endif %}
+
+            </ul>
+          </li>
+
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex flex-column justify-content-end align-items-center">
+    <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
+
+
+      <div class="carousel-item active">
+        <div class="carousel-container">
+          <h2 class="animate__animated animate__fadeInDown">Welcome to <span>AuthGuard</span></h2>
+          <p class="animate__animated fanimate__adeInUp">Your all-in-one solution for robust MultiFactor Authentication
+            (MFA). Protect your data, streamline user access, and mitigate password threats effortlessly. With
+            SecureAuth, security is seamless.</p>
+          <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Get Started</a>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28 " preserveAspectRatio="none">
+      <defs>
+        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      </defs>
+      <g class="wave1">
+        <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      </g>
+      <g class="wave2">
+        <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+      </g>
+      <g class="wave3">
+        <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+      </g>
+    </svg>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="section-title" data-aos="zoom-out">
+          <h2>About</h2>
+          <p>Who we are</p>
+        </div>
+
+        <div class="row content" data-aos="fade-up">
+          <div class="col-lg-6">
+            <p>
+              Our Multi-Factor Authentication (MFA) platform is designed to significantly enhance security measures by
+              implementing additional layers of identity verification beyond traditional passwords. With a focus on
+              mitigating password-related threats, our platform offers robust protection against phishing, brute-force
+              attacks, and credential stuffing. By integrating MFA, we ensure that only authorized users gain access,
+              safeguarding sensitive data and resources.
+            </p>
+            <ul>
+              <li><i class="ri-check-double-line"></i> Enhance Security</li>
+              <li><i class="ri-check-double-line"></i> Mitigation of Password related threats</li>
+              <li><i class="ri-check-double-line"></i>Efficient USer and Project management </li>
+            </ul>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0">
+            <p>
+              Furthermore, our platform facilitates efficient user and project management, streamlining the
+              authentication process while providing administrators with granular control over access permissions.
+              Experience heightened security, reduced risks, and streamlined operations with our comprehensive MFA
+              solution.
+            </p>
+            <a href="#" class="btn-learn-more">Learn More</a>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features">
+      <div class="container">
+
+        <ul class="nav nav-tabs row d-flex">
+          <li class="nav-item col-3" data-aos="zoom-in">
+            <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1">
+              <i class="bi bi-fingerprint"></i>
+              <h4 class="d-none d-lg-block">Authentication Orchestrator</h4>
+            </a>
+          </li>
+          <li class="nav-item col-3" data-aos="zoom-in" data-aos-delay="100">
+            <a class="nav-link" data-bs-toggle="tab" href="#tab-2">
+              <i class="bi bi-file-lock2"></i>
+              <h4 class="d-none d-lg-block">Token Lifecycle Manager</h4>
+            </a>
+          </li>
+          <li class="nav-item col-3" data-aos="zoom-in" data-aos-delay="200">
+            <a class="nav-link" data-bs-toggle="tab" href="#tab-3">
+              <i class="bi bi-shield-lock-fill"></i>
+              <h4 class="d-none d-lg-block">Password Security Enforcer</h4>
+            </a>
+          </li>
+          <li class="nav-item col-3" data-aos="zoom-in" data-aos-delay="300">
+            <a class="nav-link" data-bs-toggle="tab" href="#tab-4">
+              <i class="bi bi-shield-fill-check"></i>
+              <h4 class="d-none d-lg-block">Security Algorithm Integrator</h4>
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content" data-aos="fade-up">
+          <div class="tab-pane active show" id="tab-1">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                <h3>Key Functionality:</h3>
+                <p class="fst-italic">
+
+                  Our MFA platform orchestrates the authentication process, seamlessly integrating multiple factors for
+                  secure user login.
+                  <br>
+                  <strong>Features:</strong>
+                </p>
+                <ul>
+                  <li><i class="ri-check-double-line"></i> Integration Management: Manages authentication factor
+                    integration for a smooth user experience.</li>
+                  <li><i class="ri-check-double-line"></i> User-friendly Interface: Provides an intuitive interface for
+                    easy interaction during login.</li>
+                  <li><i class="ri-check-double-line"></i> Flexible Configuration: Allows customization based on
+                    security policies and user needs.</li>
+                  <li><i class="ri-check-double-line"></i> Error Handling: Ensures graceful handling of authentication
+                    failures.</li>
+                </ul>
+                <p>
+                  <strong>Advanced Measures: </strong>
+                  Utilizes cryptographic algorithms for secure data verification and encryption to safeguard user
+                  credentials and data integrity.
+                </p>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="assets/img/features-1.png" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-2">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                <h3>Focus:</h3>
+                <p>
+                  Our platform specializes in overseeing the lifecycle of token-based authentication, ensuring a robust
+                  and secure authentication mechanism.
+                  <br>
+                  <strong>Automation:</strong>
+                </p>
+                <p class="fst-italic">
+                </p>
+                <ul>
+                  <li><i class="ri-check-double-line"></i> Token Rotation: Automates the rotation of tokens at regular
+                    intervals to minimize the risk of compromised tokens and bolster security.
+                  </li>
+                  <li><i class="ri-check-double-line"></i> Scheduled Maintenance: Conducts regular maintenance tasks to
+                    ensure the smooth operation of token-based authentication processes.</li>
+                  <p>
+                    <strong>Enhanced Security:</strong>
+                  </p>
+                  <li><i class="ri-check-double-line"></i> Validation Checks: Implements rigorous validation checks to
+                    verify the authenticity and validity of tokens before granting access.</li>
+                  <li><i class="ri-check-double-line"></i> Real-time Monitoring: Utilizes real-time monitoring
+                    capabilities to detect and respond to suspicious token activities promptly.</li>
+                  <li><i class="ri-check-double-line"></i>Compliance Assurance: Ensures compliance with industry
+                    regulations and standards by maintaining strict control over token usage and access.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="assets/img/features-2.png" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-3">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                <h3>Goal:</h3>
+                <p>
+                  Our primary goal is to strengthen password security by implementing effective measures to reduce
+                  vulnerabilities and enhance overall protection.
+                </p>
+                <p>
+                  <strong>Dynamic Measures:</strong>
+                </p>
+                <ul>
+                  <li><i class="ri-check-double-line"></i> Password Expiry System: Implements a dynamic password expiry
+                    system that prompts users to update their passwords regularly. This proactive approach minimizes the
+                    risk of unauthorized access due to stale or compromised passwords.</li>
+                  <li><i class="ri-check-double-line"></i> Password Updation: Facilitates seamless password updates,
+                    ensuring that users maintain strong and secure passwords over time. By regularly updating passwords,
+                    organizations can stay ahead of potential security threats and maintain a robust defense against
+                    unauthorized access.</li>
+                  <p>
+                    <strong>Risk Mitigation:</strong>
+                  </p>
+                  <li><i class="ri-check-double-line"></i> Policy Enforcement: Enforces strict password policies,
+                    including complexity requirements and minimum length criteria, to enhance password strength and
+                    resilience against brute-force attacks.</li>
+                  <li><i class="ri-check-double-line"></i> Automated Updates: Automates the process of updating
+                    passwords based on predefined policies and triggers. This reduces the burden on users and ensures
+                    that passwords are regularly refreshed to mitigate the risk of compromise.</li>
+                </ul>
+                <p class="fst-italic">
+
+                </p>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="assets/img/features-3.png" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-4">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                <h3>Adaptability:</h3>
+                <p>
+                  Our platform excels in adaptability by seamlessly integrating advanced security algorithms tailored to
+                  address evolving threats and vulnerabilities.
+                </p>
+                <p>
+                  <strong>Up-to-Date Measures:</strong>
+                </p>
+                <p class="fst-italic">
+
+                </p>
+                <ul>
+                  <li><i class="ri-check-double-line"></i> Encryption Techniques: Ensures the use of up-to-date
+                    encryption techniques to safeguard sensitive data against unauthorized access or interception.</li>
+                  <li><i class="ri-check-double-line"></i> Security Updates: Regularly updates security measures to keep
+                    pace with the latest advancements and best practices in cybersecurity, ensuring continuous
+                    protection against emerging threats.</li>
+                  <p>
+                    <strong>Robust Defense:</strong>
+                  </p>
+                  <li><i class="ri-check-double-line"></i> Threat Detection: Implements robust threat detection
+                    mechanisms to identify and mitigate emerging threats in real-time, enhancing the overall resilience
+                    of the platform.</li>
+                  <li><i class="ri-check-double-line"></i> Adaptive Controls: Utilizes adaptive controls and response
+                    strategies to dynamically adjust security measures based on evolving threat landscapes, maintaining
+                    a proactive defense posture.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="assets/img/features-4.png" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Features Section -->
+
+
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+      <div class="container">
+
+        <div class="section-title" data-aos="zoom-out">
+          <h2>Services</h2>
+          <p>What we do offer</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="icon-box" data-aos="zoom-in-left">
+              <div class="icon"><i class="bi bi-shield-lock" style="color: #ff689b;"></i></div>
+              <h4 class="title"><a href="">Enhanced Security</a></h4>
+              <p class="description">Strengthen authentication methods with multi-factor authentication (MFA), dynamic
+                password management, and token-based oversight, fortifying defenses against unauthorized access and
+                cyber threats.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mt-5 mt-md-0">
+            <div class="icon-box" data-aos="zoom-in-left" data-aos-delay="100">
+              <div class="icon"><i class="bi bi-person" style="color: #e9bf06;"></i></div>
+              <h4 class="title"><a href="">Seamless User Experience</a></h4>
+              <p class="description">Provide a frictionless login experience through user-friendly interfaces and
+                automated processes, reducing user frustration and enhancing productivity.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mt-5 mt-lg-0 ">
+            <div class="icon-box" data-aos="zoom-in-left" data-aos-delay="200">
+              <div class="icon"><i class="bi bi-card-checklist" style="color: #3fcdc7;"></i></div>
+              <h4 class="title"><a href="">Compliance Adherence</a></h4>
+              <p class="description">Ensure compliance with industry regulations and standards by implementing robust
+                security measures and authentication protocols, safeguarding sensitive data and meeting regulatory
+                requirements.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mt-5">
+            <div class="icon-box" data-aos="zoom-in-left" data-aos-delay="300">
+              <div class="icon"><i class="bi bi-lightbulb" style="color:#41cf2e;"></i></div>
+              <h4 class="title"><a href="">Adaptability and Innovation</a></h4>
+              <p class="description">Integrate advanced security algorithms and continuously update encryption
+                techniques to stay ahead of evolving threats, maintaining resilience and adaptability in dynamic
+                cybersecurity landscapes.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mt-5">
+            <div class="icon-box" data-aos="zoom-in-left" data-aos-delay="400">
+              <div class="icon"><i class="bi bi-person-workspace" style="color: #d6ff22;"></i></div>
+              <h4 class="title"><a href="">Efficient Management</a></h4>
+              <p class="description">Streamline user and project management with flexible configuration options, policy
+                enforcement mechanisms, and automated updates, optimizing administrative workflows and reducing
+                operational overhead.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mt-5">
+            <div class="icon-box" data-aos="zoom-in-left" data-aos-delay="500">
+              <div class="icon"><i class="bi bi-clock" style="color: #4680ff;"></i></div>
+              <h4 class="title"><a href="">Reliable Support and Service</a></h4>
+              <p class="description">Offer dedicated customer support, training resources, and regular updates to ensure
+                the smooth implementation and ongoing success of the project, fostering trust and satisfaction among
+                users.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+        <div class="section-title" data-aos="zoom-out">
+          <h2>Portfolio</h2>
+          <p>What we've done</p>
+        </div>
+
+        <ul id="portfolio-flters" class="d-flex justify-content-end" data-aos="fade-up">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-app">App</li>
+          <li data-filter=".filter-card">Card</li>
+          <li data-filter=".filter-web">Web</li>
+        </ul>
+
+        <div class="row portfolio-container" data-aos="fade-up">
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>App 1</h4>
+              <p>App</p>
+              <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>App 2</h4>
+              <p>App</p>
+              <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Card 2</h4>
+              <p>Card</p>
+              <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Web 2</h4>
+              <p>Web</p>
+              <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>App 3</h4>
+              <p>App</p>
+              <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="App 3"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Card 1</h4>
+              <p>Card</p>
+              <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Card 3</h4>
+              <p>Card</p>
+              <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery"
+                class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Section -->
+
+
+
+
+
+
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title" data-aos="zoom-out">
+          <h2>Contact</h2>
+          <p>Contact Us</p>
+        </div>
+
+        <div class="row mt-5">
+
+          <div class="col-lg-4" data-aos="fade-right">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>Lucknow</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>vishal.mishra08112000@gmail.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>+1 2345 6789</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left">
+
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <h3>AuthGuard</h3>
+      <p>Empower your organization with our comprehensive MultiFactor Authentication (MFA) platform, enhancing security,
+        streamlining user access, and ensuring compliance effortlessly.</p>
+      <div class="social-links">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong><span>Vishal Mishra</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/selecao-bootstrap-template/ -->
+        Designed by <a href="#">Vishal Mishra</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
+{% endblock content %}
