@@ -61,9 +61,27 @@
     </style>
 </head>
 <body>
+    {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
     <div class="container mt-5">
         <h2 class="mb-4">Employee Registration</h2>
-        <form action="{% url 'emp_register' %}" method="post">
+        {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+        <form  method="post">
             {% csrf_token %}
             
             <div class="mb-3">

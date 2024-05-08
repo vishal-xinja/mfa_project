@@ -12,6 +12,4 @@ urlpatterns = [
     path('project/<int:pk>/auth/set/', set_project_auth, name='set_project_auth'),
     path('project/<int:pk>/auth/edit/', edit_project_auth, name='edit_project_auth'),
     path('employee/auth/project/<int:pk>/', employee_project_auth, name='employee_project_auth'),
-    
-    
 ]

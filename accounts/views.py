@@ -26,7 +26,6 @@ def emp_logout(request):
     return redirect('home')  # Redirect to the home page after logout
 
 
-@login_required
 def emp_register(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -37,8 +36,10 @@ def emp_register(request):
             group = Group.objects.get(name='employee')
             user.groups.add(group)
             user.save()
+            messages.success(request, 'Registered')
             return redirect('emp_login')  # Redirect to the employee login page after successful registration
         else:
+            messages.error(request, 'Failed')
             return render(request, 'emp_register.html', {'error_message': 'Passwords do not match.'})
     else:
         return render(request, 'accounts/employee/emp_register.html')

@@ -108,10 +108,12 @@
                         {{ project.end_date }}
                     </div>
                 </div>
+                <p>Project ID {{project.id}}</p>
+                <a class="dropdown-item" href="{%url 'edit_project' project.id%}">Edit Project</a>
+                    
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
