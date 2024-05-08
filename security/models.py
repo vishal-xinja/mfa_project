@@ -9,6 +9,7 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
+    manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='project_manager', default=1)
     
     def __str__(self):
         return self.name
@@ -26,5 +27,10 @@ class ProjectAlotted(models.Model):
     def __str__(self):
         return self.project.name + ' - ' + self.employee.user.username
     
+    def get_manager(self):
+        return self.manager.user.username
+
+
+       
 
 

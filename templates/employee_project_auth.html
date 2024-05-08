@@ -1,0 +1,101 @@
+{% include 'menu.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Project Authentication</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styling */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #007bff; /* Blue */
+            color: #fff; /* White */
+            border-bottom: none;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-check-label {
+            font-weight: normal;
+        }
+
+        .btn-primary {
+            background-color: #007bff !important; /* Blue */
+            border-color: #007bff !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3 !important; /* Darker blue */
+            border-color: #0056b3 !important;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d !important; /* Gray */
+            border-color: #6c757d !important;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268 !important; /* Darker gray */
+            border-color: #5a6268 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Employee Project Authentication</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="authenticationType" class="form-label">Authentication Type:</label>
+                        <select class="form-select" id="authenticationType" name="authenticationType">
+                            <option value="1">Username and Password</option>
+                            <option value="2">Single Sign-On (SSO)</option>
+                            <option value="3">Two-Factor Authentication (2FA)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="requireLogin" name="requireLogin">
+                        <label class="form-check-label" for="requireLogin">Require login to access project</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="accessControlList" class="form-label">Access Control List:</label>
+                        <textarea class="form-control" id="accessControlList" name="accessControlList" rows="3"></textarea>
+                        <small class="text-muted">Enter usernames or email addresses separated by commas (,)</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="#" class="btn btn-secondary ms-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

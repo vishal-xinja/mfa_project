@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from security.forms import ProjectForm, ProjectAlottedForm
 from security.models import Project, ProjectAlotted
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def emp_login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -73,11 +73,36 @@ def mdashboard(request):
             form.save()
             messages.success(request, 'Project added successfully.')
             return redirect('mdashboard')
-    context = {
-        'form': form,
-        'projects': Project.objects.all()
+    all_projects = Project.objects.filter(manager=request.user)
+    all_project_alloted = ProjectAlotted.objects.filter(manager=request.user)
+    # users that belong to group employee
+    all_employees = User.objects.filter(groups__name='employee')
+    paginator_project = Paginator(all_projects, 5)
+    paginator_project_alloted = Paginator(all_project_alloted, 5)
+    paginator_employee = Paginator(all_employees, 5)
+
+    page = request.GET.get('prjpage')
+    page_alloted = request.GET.get('prjallotedpage')
+    page_employee = request.GET.get('emppage')
+    try:
+        projects = paginator_project.page(page)
+        project_alloted = paginator_project_alloted.page(page_alloted)
+        employees = paginator_employee.page(page_employee)
+    except PageNotAnInteger:
+        projects = paginator_project.page(1)
+        project_alloted = paginator_project_alloted.page(1)
+        employees = paginator_employee.page(1)
+    except EmptyPage:
+        projects = paginator_project.page(paginator_project.num_pages)
+        project_alloted = paginator_project_alloted.page(paginator_project_alloted.num_pages)
+        employees = paginator_employee.page(paginator_employee.num_pages)
+    print(f'len of projects {len(projects)}')
+    ctx = {
+        'projects': projects,
+        'project_alloted': project_alloted,
+        'employees': employees,
     }
-    return render(request, 'accounts/mdashboard.html', context)
+    return render(request, 'accounts/mdashboard.html', ctx)
 
 @login_required
 def emp_dashboard(request):
@@ -86,3 +111,70 @@ def emp_dashboard(request):
         return redirect('home')
     
     return render(request, 'accounts/employee/dashboard.html')
+
+# views.py
+from django.core.mail import send_mail
+
+def add_employee(request):
+    if request.method == 'POST':
+        employee_select = request.POST.get('employeeSelect')
+        new_employee_name = request.POST.get('newEmployeeName')
+        
+        # Send email to selected or newly added employee
+        if employee_select:
+            recipient_email = get_employee_email_by_id(employee_select)  # Get recipient email from database
+            send_mail(
+                'Subject',
+                'Message body',
+                'your_email@example.com',
+                [recipient_email],
+                fail_silently=False,
+            )
+        elif new_employee_name:
+            send_mail(
+                'Subject',
+                'Message body',
+                'your_email@example.com',
+                [new_employee_name],
+                fail_silently=False,
+            )
+        # Additional logic to save the employee or handle form submission
+        
+    return redirect('add_employee_success')  # Redirect to a success page after form submission
+
+# views.py
+
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'index.html')
+
+def emp_register(request):
+    # Handle employee registration logic
+    return render(request, 'accounts/employee/emp_register.html')
+
+def emp_login(request):
+    # Handle employee login logic
+    return render(request, 'accounts/employee/emp_login.html')
+
+def emp_dashboard(request):
+    # Handle employee dashboard logic
+    return render(request, 'accounts/employee/emp_dashboard.html')
+
+# Accounts/views.py
+from django.shortcuts import render, redirect
+from .forms import ProjectForm
+
+def add_project(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('mdashboard')  # Redirect to dashboard after successful submission
+    else:
+        form = ProjectForm()
+    return render(request, 'dashboard.html', {'form': form})
+
+
+
+
