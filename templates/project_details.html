@@ -13,7 +13,7 @@
     <style>
         /* Custom styling */
         body {
-            background-color: #f8f9fa;
+            background-color: #e9ecef; /* Light gray */
             font-family: Arial, sans-serif;
         }
 
@@ -22,14 +22,16 @@
         }
 
         .card {
-            border-radius: 0.5rem;
-            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 1rem;
+            border: none;
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.5s ease-in-out forwards;
         }
 
         .card-header {
-            background-color: #3b6978; /* Dark teal */
+            background-color: #6c5ce7; /* Purple */
             color: #fff; /* White */
+            border-radius: 1rem 1rem 0 0;
         }
 
         .card-body {
@@ -56,14 +58,12 @@
         @keyframes fadeIn {
             0% {
                 opacity: 0;
+                transform: translateY(-20px);
             }
             100% {
                 opacity: 1;
+                transform: translateY(0);
             }
-        }
-
-        .fadeIn {
-            animation: fadeIn 0.5s ease-in-out forwards;
         }
     </style>
 </head>
@@ -71,7 +71,7 @@
 <body>
 
     <div class="container">
-        <div class="card fadeIn">
+        <div class="card">
             <div class="card-header">
                 <h5 class="card-title">Project Details</h5>
             </div>

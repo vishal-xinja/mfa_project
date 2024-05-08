@@ -14,7 +14,7 @@
         /* Custom styling */
         body {
             background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         .container {
@@ -23,7 +23,7 @@
 
         .card {
             border-radius: 0.5rem;
-            border: 1px solid rgba(0, 0, 0, 0.125);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
         }
 
@@ -36,6 +36,10 @@
             padding: 20px;
         }
 
+        .form-control {
+            border-color: #ced4da;
+        }
+
         .form-control:focus {
             border-color: #28a745; /* Green */
             box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
@@ -45,11 +49,28 @@
             background-color: #007bff; /* Blue */
             border-color: #007bff;
             color: #fff; /* White */
+            transition: background-color 0.3s;
         }
 
         .btn-custom:hover {
             background-color: #0056b3; /* Darker blue */
             border-color: #0056b3;
+        }
+
+        label {
+            color: #6c757d; /* Gray */
+            font-weight: bold;
+        }
+
+        .btn-back {
+            background-color: #6c757d; /* Gray */
+            border-color: #6c757d;
+            color: #fff; /* White */
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268; /* Darker gray */
+            border-color: #5a6268;
         }
     </style>
 </head>
@@ -64,22 +85,25 @@
             <div class="card-body">
                 <form>
                     <div class="mb-3">
-                        <label for="projectName" class="form-label">Project Name:</label>
+                        <label for="projectName">Project Name</label>
                         <input type="text" class="form-control" id="projectName" name="projectName">
                     </div>
                     <div class="mb-3">
-                        <label for="projectDescription" class="form-label">Description:</label>
+                        <label for="projectDescription">Description</label>
                         <textarea class="form-control" id="projectDescription" name="projectDescription"></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="projectStartDate" class="form-label">Start Date:</label>
-                        <input type="date" class="form-control" id="projectStartDate" name="projectStartDate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="projectEndDate" class="form-label">End Date:</label>
-                        <input type="date" class="form-control" id="projectEndDate" name="projectEndDate">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="projectStartDate">Start Date</label>
+                            <input type="date" class="form-control" id="projectStartDate" name="projectStartDate">
+                        </div>
+                        <div class="col">
+                            <label for="projectEndDate">End Date</label>
+                            <input type="date" class="form-control" id="projectEndDate" name="projectEndDate">
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-custom">Save Changes</button>
+                    <a href="#" class="btn btn-back ms-2">Cancel</a>
                 </form>
             </div>
         </div>

@@ -14,7 +14,7 @@
         /* Custom styling */
         body {
             background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         .container {
@@ -23,7 +23,7 @@
 
         .card {
             border-radius: 0.5rem;
-            border: 1px solid rgba(0, 0, 0, 0.125);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
         }
 
@@ -39,11 +39,13 @@
 
         .form-check-label {
             font-weight: normal;
+            color: #6c757d; /* Gray */
         }
 
         .btn-primary {
             background-color: #007bff !important; /* Blue */
             border-color: #007bff !important;
+            transition: background-color 0.3s;
         }
 
         .btn-primary:hover {
@@ -54,11 +56,16 @@
         .btn-secondary {
             background-color: #6c757d !important; /* Gray */
             border-color: #6c757d !important;
+            transition: background-color 0.3s;
         }
 
         .btn-secondary:hover {
             background-color: #5a6268 !important; /* Darker gray */
             border-color: #5a6268 !important;
+        }
+
+        textarea.form-control {
+            resize: none;
         }
     </style>
 </head>
@@ -73,7 +80,7 @@
             <div class="card-body">
                 <form>
                     <div class="mb-3">
-                        <label for="authenticationType" class="form-label">Authentication Type:</label>
+                        <label for="authenticationType">Authentication Type</label>
                         <select class="form-select" id="authenticationType" name="authenticationType">
                             <option value="1">Username and Password</option>
                             <option value="2">Single Sign-On (SSO)</option>
@@ -85,9 +92,9 @@
                         <label class="form-check-label" for="requireLogin">Require login to access project</label>
                     </div>
                     <div class="mb-3">
-                        <label for="accessControlList" class="form-label">Access Control List:</label>
+                        <label for="accessControlList">Access Control List</label>
                         <textarea class="form-control" id="accessControlList" name="accessControlList" rows="3"></textarea>
-                        <small class="text-muted">Enter usernames or email addresses separated by commas (,)</small>
+                        <small class="form-text text-muted">Enter usernames or email addresses separated by commas (,)</small>
                     </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <a href="#" class="btn btn-secondary ms-2">Cancel</a>

@@ -1,7 +1,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,61 +20,26 @@
         }
 
         .navbar-custom {
-            background-color: #3b6978;
-            /* Dark teal */
-        }
-
-        .btn-custom {
-            background-color: #28a745;
-            /* Green */
-            border-color: #28a745;
-            color: #fff;
-            /* White */
-        }
-
-        .btn-custom:hover {
-            background-color: #218838;
-            /* Darker green */
-            border-color: #1e7e34;
+            background-color: #3b6978; /* Dark teal */
         }
 
         .delete-btn {
-            cursor: pointer;
-            color: #dc3545;
-            /* Red */
+            color: #dc3545; /* Red */
         }
 
         .delete-btn:hover {
-            color: #bd2130;
-            /* Darker red */
+            color: #bd2130; /* Darker red */
         }
 
-        /* Additional styling */
-        .modal-content {
-            border-radius: 0.5rem;
-        }
-
-        .modal-header {
-            background-color: #3b6978;
-            /* Dark teal */
-            color: #fff;
-            /* White */
-        }
-
-        .modal-footer {
-            background-color: #f8f9fa;
-            /* Light gray */
-            border-top: none;
-        }
-
-        .card {
+        .feature {
             border-radius: 0.5rem;
             border: 1px solid rgba(0, 0, 0, 0.125);
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease-in-out;
         }
 
-        .list-group-item {
-            border: none;
+        .feature:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
@@ -95,7 +59,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i> Vishal Mishra
+                            <i class="fas fa-user"></i> {{ user.username }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'emp_logout' %}"><i
@@ -106,6 +70,7 @@
             </div>
         </div>
     </nav>
+
     <!-- Modal for Add New Project -->
     <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel"
         aria-hidden="true">
@@ -117,23 +82,36 @@
                 </div>
                 <div class="modal-body">
                     <!-- Form to add a new project will be here -->
-                    <form id="addProjectForm" method="post" action="{% url 'add_project' %}">
+                    <form id="addProjectForm" method="post" action="{% url 'add_project' %}" class="needs-validation"
+                        novalidate>
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="projectName" class="form-label">Name:</label>
-                            <input type="text" class="form-control" id="projectName" name="name">
+                            <input type="text" class="form-control" id="projectName" name="name" required>
+                            <div class="invalid-feedback">
+                                Please provide a project name.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="projectDescription" class="form-label">Description:</label>
-                            <textarea class="form-control" id="projectDescription" name="description"></textarea>
+                            <textarea class="form-control" id="projectDescription" name="description" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide a project description.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="projectStartDate" class="form-label">Start Date:</label>
-                            <input type="date" class="form-control" id="projectStartDate" name="start_date">
+                            <input type="date" class="form-control" id="projectStartDate" name="start_date" required>
+                            <div class="invalid-feedback">
+                                Please provide a start date.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="projectEndDate" class="form-label">End Date:</label>
-                            <input type="date" class="form-control" id="projectEndDate" name="end_date">
+                            <input type="date" class="form-control" id="projectEndDate" name="end_date" required>
+                            <div class="invalid-feedback">
+                                Please provide an end date.
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -142,26 +120,24 @@
         </div>
     </div>
 
-    <div class="container px-4 py-5" id="featured-3">
-        <h2 class="pb-2 border-bottom">All projects</h2>
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-            
+    <!-- Projects Section -->
+    <div class="container py-5">
+        <h2 class="pb-2 border-bottom">All Projects</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for item in projects %}
-            <div class="feature col border border-1 p-4">
-                <div
-                    class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                    <svg class="bi" width="1em" height="1em">
-                        <use xlink:href="#collection"></use>
-                    </svg>
+            <div class="col">
+                <div class="feature p-4 border border-1">
+                    <div class="feature-icon d-flex align-items-center justify-content-center text-primary bg-gradient fs-2 mb-3">
+                        <svg class="bi" width="1em" height="1em">
+                            <use xlink:href="#collection"></use>
+                        </svg>
+                    </div>
+                    <h3 class="fs-2 text-body">{{ item.name }}</h3>
+                    <p class="mb-3">{{ item.description }}</p>
+                    <a href="{% url 'project_detail' item.id %}" class="btn btn-primary">Manage Project</a>
                 </div>
-                <h3 class="fs-2 text-body-emphasis">{{item.name}}</h3>
-                <p>{{item.description}}</p>
-                <a href="{% url 'project_detail' item.id %}" class="icon-link text-decoration-none">
-                    Manage Project
-                </a>
             </div>
             {% endfor %}
-                
         </div>
     </div>
 

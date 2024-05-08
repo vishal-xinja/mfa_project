@@ -20,7 +20,7 @@
         }
 
         .navbar-custom {
-            background-color: #3b6978;
+            background-color: #106ae1;
             /* Dark teal */
         }
 
@@ -55,7 +55,7 @@
         }
 
         .modal-header {
-            background-color: #3b6978;
+            background-color: #8e0aec;
             /* Dark teal */
             color: #fff;
             /* White */
@@ -84,7 +84,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">AuthGuard</a>
+            <a class="navbar-brand" href="{% url 'emp_logout' %}">AuthGuard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -94,7 +94,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i> Vishal Mishra
+                            <i class="fas fa-user"></i> {{ request.user.username }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'emp_logout' %}"><i
@@ -143,13 +143,23 @@
 
     <!-- Existing Projects -->
     <div class="container px-4 py-5">
-        <h2 class="pb-2 border-bottom">Features with title</h2>
+        <h2 class="pb-2 border-bottom">Manager Dashboard</h2>
+
+        <div class="col d-flex flex-column gap-2 card mb-2">
+            <div class="card-body">
+                <h4 class="card-title">Add a project here!</h4>
+                <!-- Button to trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#addProjectModal">
+                    Add New Project <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
 
         <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
             <div class="col d-flex flex-column align-items-start gap-2">
-                <h2 class="fw-bold text-body-emphasis">Left-aligned title explaining these awesome features</h2>
-                <p class="text-body-secondary">Paragraph of text beneath the heading to explain the heading. We'll add
-                    onto it with another sentence and probably just keep going until we run out of words.</p>
+                <h2 class="fw-bold text-body-emphasis">All the Project can be seen here.</h2>
+                <p class="text-body-secondary">All project details, progress, and resources are accessible in one centralized location</p>
                 <a href="{% url 'all_projects' %}" class="btn btn-primary btn-lg">View all</a>
             </div>
 
@@ -184,16 +194,7 @@
                     </div>
 
                     {% endfor %}
-                    <div class="col d-flex flex-column gap-2 card mb-2">
-                        <div class="card-body">
-                            <h3 class="card-title"></h3>
-                            <!-- Button to trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#addProjectModal">
-                                Add New Project <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>
