@@ -1,4 +1,3 @@
-
 {% include 'menu.html' %}
 <!DOCTYPE html>
 <html lang="en">
@@ -29,8 +28,10 @@
         }
 
         .card-header {
-            background-color: #3b6978; /* Dark teal */
-            color: #fff; /* White */
+            background-color: #3b6978;
+            /* Dark teal */
+            color: #fff;
+            /* White */
         }
 
         .card-body {
@@ -51,24 +52,41 @@
                 <h5 class="card-title">Set Project Authentication</h5>
             </div>
             <div class="card-body">
-                <form>
+                <form class="" method="post" >
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="authenticationType" class="form-label">Authentication Type:</label>
                         <select class="form-select" id="authenticationType" name="authenticationType">
                             <option value="1">Username and Password</option>
-                            <option value="2">Single Sign-On (SSO)</option>
-                            <option value="3">Two-Factor Authentication (2FA)</option>
+                            <option value="2">Two-Factor Authentication (2FA)</option>
                         </select>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="requireLogin" name="requireLogin">
-                        <label class="form-check-label" for="requireLogin">Require login to access project</label>
+                    <div class="mb-3">
+                        <!-- expiry date-->
+                        <label for="expiryDate" class="form-label">Expiry Date:</label>
+                        <input type="date" class="form-control" id="expiryDate" name="expiryDate">
+                    </div>
+                    <!-- regenerate schedule (daily, hourly, weekly, monthly) -->
+                    <div class="mb-3">
+                        <label for="regenerateSchedule" class="form-label">Regenerate Schedule:</label>
+                        <select class="form-select" id="regenerateSchedule" name="regenerateSchedule">
+                            <option value="d">Daily</option>
+                            <option value="w">Weekly</option>
+                            <option value="m">Monthly</option>
+                            <option value="y">Yearly</option>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="accessControlList" class="form-label">Access Control List:</label>
-                        <textarea class="form-control" id="accessControlList" name="accessControlList" rows="3"></textarea>
-                        <small class="text-muted">Enter usernames or email addresses separated by commas (,)</small>
+                        <label for="regenerateTime" class="form-label">Regenerate Time:</label>
+                        <input type="time" class="form-control" id="regenerateTime" name="regenerateTime">
                     </div>
+                    <!-- default secret salt -->
+                    <div class="mb-3">
+                        <label for="defaultSecretSalt" class="form-label">Default Secret Salt:</label>
+                        <input type="text" class="form-control" id="defaultSecretSalt" name="defaultSecretSalt">
+                    </div>
+                    <!-- hidden project id -->
+                    <input type="hidden" id="projectId" name="project_id" value="{{project.id}}">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
             </div>

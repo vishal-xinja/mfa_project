@@ -147,25 +147,21 @@
 
         <div class="col d-flex flex-column gap-2 card mb-2">
             <div class="card-body">
-                <h4 class="card-title">Add a project here!</h4>
+                <h4 class="card-title">Manage</h4>
                 <!-- Button to trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#addProjectModal">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">
                     Add New Project <i class="fas fa-plus"></i>
+                </button>
+                <!-- add employee model -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                    Add Employee <i class="fas fa-plus"></i>
                 </button>
             </div>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
-            <div class="col d-flex flex-column align-items-start gap-2">
-                <h2 class="fw-bold text-body-emphasis">All the Project can be seen here.</h2>
-                <p class="text-body-secondary">All project details, progress, and resources are accessible in one centralized location</p>
-                <a href="{% url 'all_projects' %}" class="btn btn-primary btn-lg">View all</a>
-            </div>
-
             <div class="col">
                 <div class="row row-cols-1 row-cols-sm-2 g-4">
-
                     {% for item in projects %}
                     <div class="col d-flex flex-column gap-2 card mb-2">
                         <div class="card-body">
@@ -187,15 +183,33 @@
                             <a href="{% url 'project_detail' item.id %}" class="btn btn-primary btn-sm">View</a>
                             <!-- delete -->
                             <a href="{% url 'delete_project' item.id %}" class="btn btn-danger btn-sm">Delete</a>
-                            <!-- add employee -->
-                            <a href="{% url 'asign_employee_to_project' item.id %}" class="btn btn-primary btn-sm">Asign
-                                Employee</a>
+                            <!-- assign employee link-->
+                            <a href="{% url 'asign_employee_to_project' item.id %}" class="btn btn-primary btn-sm">Assign Employee</a>
                         </div>
                     </div>
 
                     {% endfor %}
-                   
+
                 </div>
+            </div>
+            <div class="col">
+                <!-- list all employees -->
+                <div class="row row-cols-1 row-cols-sm-2 g-4">
+                    {% for item in employees %}
+                    <div class="col d-flex">
+                        <div class="card-body">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+
+                            </div>
+                            <h4 class="fw-semibold mb-0 text-body-emphasis">{{item.name}}</h4>
+                            <p class="text-body-secondary">{{item.contact}}</p>
+                            <p class="text-body-secondary">{{item.email}}</p>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -222,35 +236,7 @@
         </div>
     </div>
 
-    <!-- Modal for Choose Employee -->
-    <div class="modal fade" id="chooseEmployeeModal" tabindex="-1" aria-labelledby="chooseEmployeeModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="chooseEmployeeModalLabel">Choose Employee</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form to choose an employee will be here -->
-                    <form id="chooseEmployeeForm">
-                        <div class="mb-3">
-                            <label for="employeeSelect" class="form-label">Select Employee:</label>
-                            <select class="form-select" id="employeeSelect" name="employeeSelect">
-                                <option selected disabled>Choose...</option>
-                                <!-- Employees will be dynamically populated here -->
-                                <option value="1">Employee 1</option>
-                                <option value="2">Employee 2</option>
-                                <option value="3">Employee 3</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#addEmployeeModal">Add Employee</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Modal for Add Employee -->
     <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"

@@ -1,5 +1,9 @@
 from django import forms
-from .models import Project, ProjectAlotted
+from .models import Project, ProjectAlotted, ProjectAuth
+from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit
+from .models import Project
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -9,13 +13,9 @@ class ProjectForm(forms.ModelForm):
 class ProjectAlottedForm(forms.ModelForm):
     class Meta:
         model = ProjectAlotted
-        fields = ['manager', 'project', 'employee']
+        fields = ['employee']
 
         # projects/forms.py
-from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
-from .models import Project
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -30,3 +30,14 @@ class ProjectForm(forms.ModelForm):
             'description',
             Submit('submit', 'Save')
         )
+
+class ProjectAuthForm(forms.ModelForm):
+    class Meta:
+        model = ProjectAuth
+        fields = '__all__'
+        exclude = ['project']
+        widgets = {
+            'expiry_date': forms.DateInput(attrs={'type': 'date'}),
+            'regen_time': forms.TimeInput(attrs={'type': 'time'}),
+        }
+        # projects/views.py

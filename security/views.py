@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Project, ProjectAlotted
-from .forms import ProjectForm, ProjectAlottedForm
+from .models import Project, ProjectAlotted,ProjectAuth
+from .forms import ProjectForm, ProjectAuthForm
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 # pagination 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
@@ -71,25 +71,40 @@ def add_project(request):
 @login_required
 def project_details(request, pk):   
     project= Project.objects.get(pk=pk)
-    project_alotted = ProjectAlotted.objects.filter(project=project)
-    return render(request, 'project_details.html', {'project': project, 'project_alotted': project_alotted})
+    members = ProjectAlotted.objects.filter(project=project)
+    auth = ProjectAuth.objects.filter(project=project)
+    return render(request, 'project_details.html', {'project': project, 'members': members, 'pid': pk, 'auth': auth})
 
 @login_required
 def asign_employee_to_project(request, pk):
     project = Project.objects.get(pk=pk)
-    form = ProjectAlottedForm()
+    # users that belong to group 'employee'
+    group = Group.objects.get(name='employee')
+    employees = User.objects.filter(groups=group)
+    # remove employees that are already assigned to the project
+    project_alotted = ProjectAlotted.objects.filter(project=project)
+    for p in project_alotted:
+        employees = employees.exclude(pk=p.employee.pk)
     if request.method == 'POST':
-        form = ProjectAlottedForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Employee assigned to project successfully.')
-        else:
-            messages.error(request, 'Error assigning employee to project.')
-    return redirect('project_details', pk=pk)
+        emp_id = request.POST.get('emp')
+        manager_id = request.POST.get('manager_id')
+        project_id = request.POST.get('project_id')
+        employee = User.objects.get(pk=emp_id)
+        manager = User.objects.get(pk=manager_id)
+        project = Project.objects.get(pk=project_id)
+        project_alotted = ProjectAlotted(manager=manager, project=project, employee=employee)
+        project_alotted.save()
+        messages.success(request, 'Employee added to project successfully.')
+        return redirect('project_detail', pk=project.pk)
+
+    return render(request, 'assign_e_to_p.html', { 
+        'project': project, 
+        'employees': employees}
+    )
 
 @login_required
-def remove_employee_from_project(request, pk):
-    project_alotted = ProjectAlotted.objects.get(pk=pk)
+def remove_employee_from_project(request, pa):
+    project_alotted = ProjectAlotted.objects.get(pk=pa)
     project_alotted.delete()
     messages.success(request, 'Employee removed from project successfully.')
     return redirect('project_details', pk=project_alotted.project.pk)
@@ -121,11 +136,59 @@ def edit_project(request, pk):
 
 @login_required
 def set_project_auth(request, pk):
-    return render(request, 'set_project_auth.html') 
+    project = Project.objects.get(pk=pk)
+    if request.method == 'POST':
+        project_id = request.POST.get('project_id')
+        defaultSecretSalt = request.POST.get('defaultSecretSalt')
+        regenerateTime = request.POST.get('regenerateTime')
+        regenerateSchedule = request.POST.get('regenerateSchedule')
+        expiryDate = request.POST.get('expiryDate')
+        authenticationType = request.POST.get('authenticationType')
+        project = Project.objects.get(pk=project_id)
+        if not defaultSecretSalt:
+            messages.error(request, 'Default secret salt is required.')
+            return redirect('set_project_auth', pk=project.pk)
+        if not regenerateTime:
+            messages.error(request, 'Regenerate time is required.')
+            return redirect('set_project_auth', pk=project.pk)
+        if not regenerateSchedule:
+            messages.error(request, 'Regenerate schedule is required.')
+            return redirect('set_project_auth', pk=project.pk)
+        if not expiryDate:
+            messages.error(request, 'Expiry date is required.')
+            return redirect('set_project_auth', pk=project.pk)
+        if not authenticationType:
+            messages.error(request, 'Authentication type is required.')
+            return redirect('set_project_auth', pk=project.pk)
+        project_auth = ProjectAuth(project=project, 
+                                   expiry_date=expiryDate, 
+                                   salt = defaultSecretSalt,
+                                   schedule=regenerateSchedule, 
+                                   regen_time=regenerateTime)
+        project_auth.save()
+        messages.success(request, 'Project authentication set successfully.')
+        return redirect('project_detail', pk=project.pk)
+    return render(request, 'set_project_auth.html', {
+        'project': project,
+    }) 
 
 @login_required
 def edit_project_auth(request, pk):
-    return render(request, 'edit_project_auth.html')
+    project = Project.objects.get(pk=pk)
+    auth = ProjectAuth.objects.get(project=project)
+    form = ProjectAuthForm(instance=auth)
+    if request.method == 'POST':
+        form = ProjectAuthForm(request.POST, instance=auth)
+        if form.is_valid():
+            model = form.save(commit=False)
+            model.project= project
+            model.save()
+            messages.success(request, 'Project authentication updated successfully.')
+            return redirect('project_detail', pk=pk)
+    return render(request, 'edit_project_auth.html', {
+        'form': form,
+        'project': project,
+    })
 
 @login_required
 def employee_project_auth(request, pk):

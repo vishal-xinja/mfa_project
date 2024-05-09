@@ -20,15 +20,18 @@
         }
 
         .navbar-custom {
-            background-color: #3b6978; /* Dark teal */
+            background-color: #3b6978;
+            /* Dark teal */
         }
 
         .delete-btn {
-            color: #dc3545; /* Red */
+            color: #dc3545;
+            /* Red */
         }
 
         .delete-btn:hover {
-            color: #bd2130; /* Darker red */
+            color: #bd2130;
+            /* Darker red */
         }
 
         .feature {
@@ -94,7 +97,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="projectDescription" class="form-label">Description:</label>
-                            <textarea class="form-control" id="projectDescription" name="description" required></textarea>
+                            <textarea class="form-control" id="projectDescription" name="description"
+                                required></textarea>
                             <div class="invalid-feedback">
                                 Please provide a project description.
                             </div>
@@ -122,19 +126,28 @@
 
     <!-- Projects Section -->
     <div class="container py-5">
-        <h2 class="pb-2 border-bottom">All Projects</h2>
+        <h2 class="pb-2 border-bottom">
+            All Company Projects
+            <!-- link to dashboard -->
+            <a href="{% url 'mdashboard' %}" class="btn btn-primary btn-sm"> Back to Dashboard</a>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for item in projects %}
             <div class="col">
                 <div class="feature p-4 border border-1">
-                    <div class="feature-icon d-flex align-items-center justify-content-center text-primary bg-gradient fs-2 mb-3">
+                    <div
+                        class="feature-icon d-flex align-items-center justify-content-center text-primary bg-gradient fs-2 mb-3">
                         <svg class="bi" width="1em" height="1em">
                             <use xlink:href="#collection"></use>
                         </svg>
                     </div>
                     <h3 class="fs-2 text-body">{{ item.name }}</h3>
                     <p class="mb-3">{{ item.description }}</p>
-                    <a href="{% url 'project_detail' item.id %}" class="btn btn-primary">Manage Project</a>
+                    <a href="{% url 'project_detail' item.id %}" class="btn btn-primary btn-sm">View</a>
+                    <!-- delete -->
+                    <a href="{% url 'delete_project' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <!-- assign employee link-->
+                    <a href="{% url 'asign_employee_to_project' item.id %}" class="btn btn-primary btn-sm">Assign
+                        Employee</a>
                 </div>
             </div>
             {% endfor %}

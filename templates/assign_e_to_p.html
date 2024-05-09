@@ -1,4 +1,6 @@
+{% load crispy_forms_tags %}
 {% include 'menu.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +15,8 @@
     <style>
         /* Custom styling */
         body {
-            background-color: #e9ecef; /* Light gray */
+            background-color: #e9ecef;
+            /* Light gray */
             font-family: Arial, sans-serif;
         }
 
@@ -29,8 +32,10 @@
         }
 
         .card-header {
-            background-color: #6c5ce7; /* Purple */
-            color: #fff; /* White */
+            background-color: #6c5ce7;
+            /* Purple */
+            color: #fff;
+            /* White */
             border-radius: 1rem 1rem 0 0;
         }
 
@@ -60,6 +65,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             100% {
                 opacity: 1;
                 transform: translateY(0);
@@ -108,75 +114,54 @@
                         {{ project.end_date }}
                     </div>
                 </div>
-                
-                    
             </div>
         </div>
     </div>
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Project Members</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <strong>Members:</strong>
-                    </div>
-                    <div class="col-md-9">
-                        <ul class="list-group">
-                            {% for member in members %}
-                            <li class="list-group-item">
-                                <div class="d-flex ">
-                                    <div class="d-flex gap-3">
-                                          
-                                        <span>#EID{{ member.employee.id }}</span>
-                                        <span>
-                                            <i class="fas fa-user"></i>
-                                            {{ member.employee.username }}</span>
-                                        <span>
-                                            <i class="fas fa-envelope"></i> {{ member.employee.email }}
-                                        </span>
-                                    </div>
-                                    <!-- remove -->
-                                    <a href="{% url 'remove_employee_from_project' member.id %}"
-                                        class="btn btn-danger btn-sm ms-auto">
-                                        <i class="fas fa-trash"></i> Remove
-                                    </a>
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post" class="card p-3">
+                    {% csrf_token %}
 
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Project Auth Configuration</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <strong>Configure</strong>
-                    </div>
-                    <div class="col-md-9">
+                    <div class="mb-3">
+                        <label for="emp" class="form-label">Employee</label>
+                        <div class="mb-3">
+                            <label for="project" class="form-label">Project</label>
+                            <input type="text" class="form-control" name="project" id="project"
+                                aria-describedby="project" value="{{ project.name }}" placeholder="Project" disabled />
+                            <small id="project" class="form-text text-muted">Cannot be edited</small>
+                        </div>
+                        <!-- manager  -->
+                        <div class="mb-3">
+                            <label for="manager" class="form-label">Manager</label>
+                            <input type="text" class="form-control" name="manager" id="manager"
+                            aria-describedby="helpId" value="{{ project.manager.username }}" disabled
+                            placeholder="Manager Name" />
+                            <small id="helpId" class="form-text text-muted">Cannot be edited</small>
+                        </div>
                         
-                        {% if auth %}
-                        <a href="{% url 'edit_project_auth' pid %}" class="btn btn-sm btn-success">
-                            Click here to edit auth configuration
-                        </a> 
-                        {% else %}
-                        <a href="{% url 'set_project_auth' pid %}" class="btn btn-sm btn-warning">
-                            Click here to setup auth configuration
-                        </a>
-                        {% endif %}
-                            
+                        <input type="hidden" name="project_id" value="{{ project.id }}" />
+                        <input type="hidden" name="manager_id" value="{{ project.manager.id }}" />
+                        <select class="form-select form-select" name="emp" id="emp">
+                            <option selected>Add employee to project</option>
+                            {% for employee in employees %}
+                            <option value="{{ employee.id }}">{{ employee.username }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary mt-3">Assign Employee</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <h5>Available Employees</h5>
+                <ul class="list-group">
+                    {% for employee in employees %}
+                    <li class="list-group-item">{{ employee.username }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

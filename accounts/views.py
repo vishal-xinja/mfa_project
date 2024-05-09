@@ -151,8 +151,23 @@ def index(request):
     return render(request, 'index.html')
 
 def emp_register(request):
-    # Handle employee registration logic
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        confirm_password = request.POST['confirm_password']
+        if password == confirm_password:
+            user =  User.objects.create_user(username=username, password=password, email=email)
+            group = Group.objects.get(name='employee')
+            user.groups.add(group)
+            user.save()
+            messages.success(request, 'Registered')
+            return redirect('emp_login')  # Redirect to the employee login page after successful registration
+        else:
+            messages.error(request, 'Failed')
+            return render(request, 'emp_register.html', {'error_message': 'Passwords do not match.'})
     return render(request, 'accounts/employee/emp_register.html')
+
 
 def emp_login(request):
     # Handle employee login logic
